@@ -1,2 +1,4 @@
+*.bat text eol=crlf
+*.pbxproj -text
 *.java linguist-detectable=false
 *.objc linguist-detectable=false
