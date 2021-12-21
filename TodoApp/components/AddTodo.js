@@ -1,10 +1,28 @@
 import React, {useState} from 'react';
-import {Image} from 'react-native';
+import {
+  Image,
+  Keyboard,
+  Platform,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native';
 import styled from 'styled-components/native';
 import BtnImg from '../assets/icons/add_white/add_white.png';
 
 const AddTodo = () => {
   const [text, setText] = useState('');
+
+  const onPress = () => {
+    setText('');
+    Keyboard.dismiss();
+  };
+
+  const button = (
+    <AddBtn>
+      <Image source={BtnImg} />
+    </AddBtn>
+  );
+
   return (
     <Container>
       <Input
@@ -12,9 +30,20 @@ const AddTodo = () => {
         value={text}
         onChangeText={setText}
       />
-      <AddBtn>
-        <Image source={BtnImg} />
-      </AddBtn>
+      {Platform.select({
+        ios: (
+          <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+            {button}
+          </TouchableOpacity>
+        ),
+        android: (
+          <CircleWrapper>
+            <TouchableNativeFeedback onPress={onPress}>
+              {button}
+            </TouchableNativeFeedback>
+          </CircleWrapper>
+        ),
+      })}
     </Container>
   );
 };
@@ -42,6 +71,11 @@ const AddBtn = styled.View`
   width: 48px;
   height: 48px;
   background-color: #26a69a;
+  border-radius: 24px;
+`;
+
+const CircleWrapper = styled.View`
+  overflow: hidden;
   border-radius: 24px;
 `;
 
