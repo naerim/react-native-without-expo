@@ -29,6 +29,8 @@ const AddTodo = () => {
         placeholder="할일을 입력하세요. "
         value={text}
         onChangeText={setText}
+        onSubmitEditing={onPress}
+        returnType="done"
       />
       {Platform.select({
         ios: (
