@@ -1,15 +1,14 @@
 import React from 'react';
-import {FlatList, View, Text} from 'react-native';
 import styled from 'styled-components/native';
+import TodoItem from './TodoItem';
 
 const TodoList = ({todos}) => {
   return (
     <List
+      ItemSeparatorComponent={() => <Separator />}
       data={todos}
       renderItem={({item}) => (
-        <View>
-          <Text>{item.text}</Text>
-        </View>
+        <TodoItem id={item.id} text={item.text} done={item.done} />
       )}
       keyExtractor={item => item.id.toString()}
     />
@@ -18,6 +17,11 @@ const TodoList = ({todos}) => {
 
 const List = styled.FlatList`
   flex: 1;
+`;
+
+const Separator = styled.View`
+  background-color: #e0e0e0;
+  height: 1px;
 `;
 
 export default TodoList;
