@@ -3,10 +3,12 @@ import {Image} from 'react-native';
 import styled from 'styled-components';
 import Check_Icon from '../assets/icons/check_white/check_white.png';
 
-const TodoItem = ({id, text, done}) => (
+const TodoItem = ({id, text, done, onToggle}) => (
   <Wrap>
-    <Circle done={done}>{done && <Image source={Check_Icon} />}</Circle>
-    <Title done={done}>{text}</Title>
+    <TouchWrap onPress={() => onToggle(id)}>
+      <Circle done={done}>{done && <Image source={Check_Icon} />}</Circle>
+      <Title done={done}>{text}</Title>
+    </TouchWrap>
   </Wrap>
 );
 
@@ -15,6 +17,10 @@ const Wrap = styled.View`
   padding: 16px;
   align-items: center;
   border-bottom-color: #e0e0e0;
+`;
+
+const TouchWrap = styled.TouchableOpacity`
+  flex-direction: row;
 `;
 
 const Circle = styled.View`

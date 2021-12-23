@@ -9,10 +9,11 @@ import {
 import styled from 'styled-components/native';
 import BtnImg from '../assets/icons/add_white/add_white.png';
 
-const AddTodo = () => {
+const AddTodo = ({onInsert}) => {
   const [text, setText] = useState('');
 
   const onPress = () => {
+    onInsert(text);
     setText('');
     Keyboard.dismiss();
   };
