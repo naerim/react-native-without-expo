@@ -1,22 +1,40 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Alert, Image, TouchableOpacity} from 'react-native';
 import styled from 'styled-components';
 import Check_Icon from '../assets/icons/check_white/check_white.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const TodoItem = ({id, text, done, onToggle}) => (
-  <Wrap>
-    <TouchWrap onPress={() => onToggle(id)}>
-      <Circle done={done}>{done && <Image source={Check_Icon} />}</Circle>
-      <Title done={done}>{text}</Title>
-      {done ? (
-        <Icon name="delete" size={32} color="red" />
-      ) : (
-        <RemovePlaceHolder />
-      )}
-    </TouchWrap>
-  </Wrap>
-);
+const TodoItem = ({id, text, done, onToggle, onRemove}) => {
+  const remove = () => {
+    Alert.alert(
+      '삭제',
+      '정말로 삭제하시겠어요?',
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {text: '삭제', onPress: () => onRemove(id), style: 'destructive'},
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
+  };
+  return (
+    <Wrap>
+      <TouchWrap onPress={() => onToggle(id)}>
+        <Circle done={done}>{done && <Image source={Check_Icon} />}</Circle>
+        <Title done={done}>{text}</Title>
+        {done ? (
+          <TouchableOpacity onPress={remove}>
+            <Icon name="delete" size={32} color="red" />
+          </TouchableOpacity>
+        ) : (
+          <RemovePlaceHolder />
+        )}
+      </TouchWrap>
+    </Wrap>
+  );
+};
 
 const Wrap = styled.View`
   flex-direction: row;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TodoItem from './TodoItem';
 
-const TodoList = ({todos, onToggle}) => {
+const TodoList = ({todos, onToggle, onRemove}) => {
   return (
     <List
       ItemSeparatorComponent={() => <Separator />}
@@ -13,6 +13,7 @@ const TodoList = ({todos, onToggle}) => {
           text={item.text}
           done={item.done}
           onToggle={onToggle}
+          onRemove={onRemove}
         />
       )}
       keyExtractor={item => item.id.toString()}
