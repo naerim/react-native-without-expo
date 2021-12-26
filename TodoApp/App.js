@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
@@ -6,6 +6,7 @@ import AddTodo from './components/AddTodo';
 import DateHead from './components/DateHead';
 import Empty from './components/Empty';
 import TodoList from './components/TodoList';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const App = () => {
   const today = new Date();
@@ -37,6 +38,18 @@ const App = () => {
     const nextTodos = todos.filter(todo => todo.id !== id);
     setTodos(nextTodos);
   };
+
+  // 저장
+  useEffect(() => {
+    async function save() {
+      try {
+        await AsyncStorage.setItem('todos', JSON.stringify(todos));
+      } catch (e) {
+        console.log('Failed to save todos');
+      }
+    }
+    save();
+  }, [todos]);
 
   return (
     <SafeAreaProvider>
